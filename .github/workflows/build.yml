@@ -1,0 +1,24 @@
+name: build
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+    - uses: actions/setup-java@main
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+        cache: 'gradle'
+    - name: Clone repository
+      run: git clone https://github.com/androidx/androidx.git --depth 1 && cd androidx
+    - name: Change kotlin build target
+      run: find ./buildSrc -type f -exec sed -i -e 's/jvmTarget = \"11\"/jvmTarget = \"1.8\"/g' {} \;
+    - name: Change kotlin build target
+      run: cd compose/compiler && ./gradlew compose:compiler:compiler:publishToMavenLocal compose:compiler:compiler-hosted:publishToMavenLocal
+    - name: Upload Artifact
+      uses: actions/upload-artifact@main
+      with:
+        name: repository
+        path: ~/.m2/repository/*
