@@ -12,7 +12,6 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: '17'
-        cache: 'gradle'
     - name: Clone repository
       run: git clone https://github.com/androidx/androidx.git --depth 1 && cd androidx
     - name: Change kotlin build target
