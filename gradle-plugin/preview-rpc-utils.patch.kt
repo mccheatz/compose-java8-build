@@ -1,5 +1,5 @@
 
-internal fun ByteArrayOutputStream.toString(charset: java.nio.Charset) = 
+internal fun ByteArrayOutputStream.toString(charset: java.nio.charset.Charset) = 
 	this.toString(charset.name())
 
 internal fun java.net.URLEncoder.encode(str: String, charset: java.nio.charset.Charset) = 
