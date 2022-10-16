@@ -16,7 +16,7 @@ jobs:
       run: git clone https://github.com/androidx/androidx.git --depth 1
     - name: Change kotlin build target
       run: find ./androidx/buildSrc -type f -exec sed -i -e 's/jvmTarget = \"11\"/jvmTarget = \"1.8\"/g' {} \;
-    - name: Change kotlin build target
+    - name: Build artifact
       run: cd ./androidx/compose/compiler && ./gradlew compose:compiler:compiler:publishToMavenLocal compose:compiler:compiler-hosted:publishToMavenLocal
     - name: Upload Artifact
       uses: actions/upload-artifact@main
