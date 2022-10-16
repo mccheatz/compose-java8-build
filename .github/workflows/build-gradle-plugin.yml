@@ -15,7 +15,9 @@ jobs:
     - name: Clone repository
       run: git clone https://github.com/JetBrains/compose-jb.git --depth 1
     - name: Apply patches
-      run: cat ./gradle-plugin/preview-rpc-utils.patch.kt >> ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/utils.kt
+      run: |
+        cat ./gradle-plugin/preview-rpc-utils.patch.kt >> ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/utils.kt
+        sed 's/, Charsets.UTF_8/, "UTF-8"/g' ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/commands.kt
     - name: Build artifact
       run: cd ./compose-jb/gradle-plugins && ./gradlew :compose:publishToMavenLocal
     - name: Upload Artifact
