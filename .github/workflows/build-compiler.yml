@@ -1,10 +1,10 @@
-name: build
+name: build-compiler
 
 on: workflow_dispatch
 
 jobs:
   build:
-    name: Build
+    name: Build Compose Compiler
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main

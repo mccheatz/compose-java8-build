@@ -1,0 +1,25 @@
+name: build-gradle-plugin
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    name: Build Compose MPP Gradle Plugin
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+    - uses: actions/setup-java@main
+      with:
+        distribution: 'zulu'
+        java-version: '8'
+    - name: Clone repository
+      run: git clone https://github.com/JetBrains/compose-jb.git --depth 1
+    - name: Apply patches
+      run: cat ./compose-jb/gradle-plugin/preview-rpc-utils.patch.kt >> ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/utils.kt
+    - name: Build artifact
+      run: cd ./compose-jb/gradle-plugins && ./gradlew :compose:publishToMavenLocal
+    - name: Upload Artifact
+      uses: actions/upload-artifact@main
+      with:
+        name: repository
+        path: ~/.m2/repository/*
