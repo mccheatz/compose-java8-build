@@ -14,8 +14,10 @@ jobs:
         java-version: '17'
     - name: Clone repository
       run: git clone https://github.com/androidx/androidx.git --depth 1
-    - name: Change kotlin build target
-      run: find ./androidx/buildSrc -type f -exec sed -i -e 's/jvmTarget = \"11\"/jvmTarget = \"1.8\"/g' {} \;
+    - name: Change kotlin build target and apply patches
+      run: |
+        find ./androidx/buildSrc -type f -exec sed -i -e 's/jvmTarget = \"11\"/jvmTarget = \"1.8\"/g' {} \;
+        sed -i 's/Integer.parseUnsignedInt(value, start, current, 10)/Integer.parseUnsignedInt(value.substring(start, current), 10)/g' ./androidx/compose/compiler/compiler-hosted/src/main/java/androidx/compose/compiler/plugins/kotlin/inference/Scheme.kt
     - name: Build artifact
       run: cd ./androidx/compose/compiler && ./gradlew compose:compiler:compiler:publishToMavenLocal compose:compiler:compiler-hosted:publishToMavenLocal
     - name: Upload Artifact
