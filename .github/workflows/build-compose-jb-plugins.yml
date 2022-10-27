@@ -19,7 +19,7 @@ jobs:
         sed -i 's/, Charsets.UTF_8/, "UTF-8"/g' ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/commands.kt
         sed -i 's/Charsets.UTF_8/"UTF-8"/g' ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/utils.kt
     - name: Build artifact (Gradle Plugin)
-      run: cd ./compose-jb/gradle-plugins && ./gradlew :compose:publishToMavenLocal
+      run: cd ./compose-jb/gradle-plugins && ./gradlew :compose:publishToMavenLocal :preview-rpc:publishToMavenLocal
     - name: Clean Useless Files
       run: find ~/.m2/repository -name 'maven-metadata-local.xml' -type f -delete
     - name: Upload Artifact (Gradle Plugin)
