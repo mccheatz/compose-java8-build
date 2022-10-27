@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
   build:
-    name: Build Compose MPP Gradle Plugin
+    name: Build Compose MPP Plugins
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
@@ -17,7 +17,7 @@ jobs:
     - name: Apply patches
       run: |
         sed -i 's/, Charsets.UTF_8/, "UTF-8"/g' ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/utils.kt
-        sed -i 's/, Charsets.UTF_8/, "UTF-8"/g' ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/commands.kt
+        sed -i 's/Charsets.UTF_8/, "UTF-8"/g' ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/commands.kt
     - name: Build artifact
       run: cd ./compose-jb/gradle-plugins && ./gradlew :compose:publishToMavenLocal
     - name: Upload Artifact (Gradle Plugin)
@@ -28,5 +28,5 @@ jobs:
     - name: Upload Artifact (IDEA Plugin)
       uses: actions/upload-artifact@main
       with:
-        name: repository
+        name: idea-plugin
         path: ./compose-jb/idea-plugin/build/idea-sandbox/plugins
