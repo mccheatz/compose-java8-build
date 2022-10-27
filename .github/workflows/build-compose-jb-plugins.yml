@@ -1,4 +1,4 @@
-name: build-gradle-plugin
+name: build-compose-jb-plugins
 
 on: workflow_dispatch
 
@@ -16,12 +16,17 @@ jobs:
       run: git clone https://github.com/JetBrains/compose-jb.git --depth 1
     - name: Apply patches
       run: |
-        cat ./gradle-plugin/preview-rpc-utils.patch.kt >> ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/utils.kt
+        sed -i 's/, Charsets.UTF_8/, "UTF-8"/g' ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/utils.kt
         sed -i 's/, Charsets.UTF_8/, "UTF-8"/g' ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/commands.kt
     - name: Build artifact
       run: cd ./compose-jb/gradle-plugins && ./gradlew :compose:publishToMavenLocal
-    - name: Upload Artifact
+    - name: Upload Artifact (Gradle Plugin)
       uses: actions/upload-artifact@main
       with:
         name: repository
         path: ~/.m2/repository/*
+    - name: Upload Artifact (IDEA Plugin)
+      uses: actions/upload-artifact@main
+      with:
+        name: repository
+        path: ./compose-jb/idea-plugin/build/idea-sandbox/plugins
