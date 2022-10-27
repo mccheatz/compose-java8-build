@@ -18,6 +18,8 @@ jobs:
       run: |
         sed -i 's/, Charsets.UTF_8/, "UTF-8"/g' ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/commands.kt
         sed -i 's/Charsets.UTF_8/"UTF-8"/g' ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/utils.kt
+    - name: Clean Useless Files
+      run: find ~/.m2/repository -name 'maven-metadata-local.xml' -type f -delete
     - name: Build artifact
       run: cd ./compose-jb/gradle-plugins && ./gradlew :compose:publishToMavenLocal
     - name: Upload Artifact (Gradle Plugin)
@@ -29,4 +31,4 @@ jobs:
       uses: actions/upload-artifact@main
       with:
         name: idea-plugin
-        path: ./compose-jb/idea-plugin/build/idea-sandbox/plugins
+        path: compose-jb/idea-plugin/build/idea-sandbox/plugins/*

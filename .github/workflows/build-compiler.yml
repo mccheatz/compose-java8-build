@@ -20,6 +20,8 @@ jobs:
         sed -i 's/Integer.parseUnsignedInt(value, start, current, 10)/Integer.parseUnsignedInt(value.substring(start, current), 10)/g' ./androidx/compose/compiler/compiler-hosted/src/main/java/androidx/compose/compiler/plugins/kotlin/inference/Scheme.kt
     - name: Build artifact
       run: cd ./androidx/compose/compiler && ./gradlew compose:compiler:compiler:publishToMavenLocal compose:compiler:compiler-hosted:publishToMavenLocal
+    - name: Clean Useless Files
+      run: find ~/.m2/repository -name 'maven-metadata-local.xml' -type f -delete
     - name: Upload Artifact
       uses: actions/upload-artifact@main
       with:
