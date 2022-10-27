@@ -27,10 +27,10 @@ jobs:
       with:
         name: repository
         path: ~/.m2/repository/*
-    - name: Build artifact (IDEA Plugin)
-      run: cd ./compose-jb/idea-plugin && ./gradlew build
-    - name: Upload Artifact (IDEA Plugin)
-      uses: actions/upload-artifact@main
-      with:
-        name: idea-plugin
-        path: compose-jb/idea-plugin/build/idea-sandbox/plugins/*
+#    - name: Build artifact (IDEA Plugin)
+#      run: cd ./compose-jb/idea-plugin && ./gradlew build
+#    - name: Upload Artifact (IDEA Plugin)
+#      uses: actions/upload-artifact@main
+#      with:
+#        name: idea-plugin
+#        path: compose-jb/idea-plugin/build/idea-sandbox/plugins/*
