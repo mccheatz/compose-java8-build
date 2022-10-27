@@ -17,7 +17,7 @@ jobs:
     - name: Apply patches
       run: |
         sed -i 's/, Charsets.UTF_8/, "UTF-8"/g' ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/utils.kt
-        sed -i 's/Charsets.UTF_8/, "UTF-8"/g' ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/commands.kt
+        sed -i 's/Charsets.UTF_8/"UTF-8"/g' ./compose-jb/gradle-plugins/preview-rpc/src/main/kotlin/org/jetbrains/compose/desktop/ui/tooling/preview/rpc/commands.kt
     - name: Build artifact
       run: cd ./compose-jb/gradle-plugins && ./gradlew :compose:publishToMavenLocal
     - name: Upload Artifact (Gradle Plugin)
